@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Perionica Čepac",
-  description: "Profesionalne usluge pranja i čišćenja",
+  title: "RRcustomsserbia - Profesionalna Auto-hemija",
+  description: "Kvalitetna auto-hemija za pranje i održavanje vozila. Perionica Čepac - Zrenjanin",
 };
 
 export default function RootLayout({ children }) {
