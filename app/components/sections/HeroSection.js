@@ -39,39 +39,6 @@ export default function HeroSection() {
               </Link>
             </div>
           </div>
-          
-          {/* Feature highlights */}
-          <div className="hidden lg:block">
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <h3 className="text-2xl font-bold mb-6">Zašto RRcustomsserbia?</h3>
-              <div className="space-y-4">
-                <div className="flex items-center">
-                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-3">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span>Dugogodišnje iskustvo</span>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-3">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span>Ekološki prihvatljiva sredstva</span>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mr-3">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span>Profesionalni pristup</span>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>
