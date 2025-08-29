@@ -10,7 +10,7 @@ export default function HeroSection() {
         <img 
           src="https://images.pexels.com/photos/3354648/pexels-photo-3354648.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
           alt="Pranje automobila"
-          className="w-full h-full object-cover opacity-30"
+          className="w-full h-full object-cover opacity"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/80 to-red-600/80"></div>
       </div>
