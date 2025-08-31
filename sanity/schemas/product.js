@@ -16,6 +16,7 @@ export default {
       options: {
         source: 'name',
         maxLength: 96,
+        auto: true
         slugify: input => input
           .toLowerCase()
           .replace(/\s+/g, '-')
