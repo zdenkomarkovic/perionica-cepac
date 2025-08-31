@@ -1,42 +1,59 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Button from '../components/ui/Button';
 import { SITE_CONFIG } from '@/app/constants/site';
-
-const productCategories = [
-  {
-    title: 'Sredstva za pranje',
-    description: 'Šamponi, deterdženti i ostala sredstva za čišćenje',
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-      </svg>
-    ),
-    bgColor: 'from-blue-50 to-blue-100'
-  },
-  {
-    title: 'Proizvodi za poliranje',
-    description: 'Voskovi, poliri i sredstva za sjaj',
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-      </svg>
-    ),
-    bgColor: 'from-red-50 to-red-100'
-  },
-  {
-    title: 'Zaštitna sredstva',
-    description: 'Proizvodi za dugotrajnu zaštitu vozila',
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.031 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-      </svg>
-    ),
-    bgColor: 'from-gray-50 to-gray-100'
-  }
-];
+import { client } from '@/sanity/lib/client';
+import { getImageUrl } from '@/sanity/lib/image';
+import { categoriesQuery, productsQuery } from '@/sanity/lib/queries';
 
 export default function ProizvodiPage() {
+  const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [categoriesData, productsData] = await Promise.all([
+          client.fetch(categoriesQuery),
+          client.fetch(productsQuery)
+        ]);
+        
+        setCategories(categoriesData);
+        setProducts(productsData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const filteredProducts = selectedCategory === 'all' 
+    ? products 
+    : products.filter(product => product.category?._id === selectedCategory);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        <div className="flex items-center justify-center py-20">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Učitavanje proizvoda...</p>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -62,40 +79,152 @@ export default function ProizvodiPage() {
         </div>
       </section>
 
-      {/* Coming Soon Section */}
-      <section className="py-24">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
-            <div className="p-12 text-center">
+      {/* Products Section */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Category Filter */}
+          {categories.length > 0 && (
+            <div className="mb-12">
+              <div className="flex flex-wrap gap-4 justify-center">
+                <button
+                  onClick={() => setSelectedCategory('all')}
+                  className={`px-6 py-3 rounded-full font-medium transition-all duration-200 ${
+                    selectedCategory === 'all'
+                      ? 'bg-gradient-to-r from-blue-600 to-red-600 text-white shadow-lg'
+                      : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600'
+                  }`}
+                >
+                  Svi proizvodi
+                </button>
+                {categories.map((category) => (
+                  <button
+                    key={category._id}
+                    onClick={() => setSelectedCategory(category._id)}
+                    className={`px-6 py-3 rounded-full font-medium transition-all duration-200 ${
+                      selectedCategory === category._id
+                        ? 'bg-gradient-to-r from-blue-600 to-red-600 text-white shadow-lg'
+                        : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600'
+                    }`}
+                  >
+                    {category.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Products Grid */}
+          {filteredProducts.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredProducts.map((product) => (
+                <div 
+                  key={product._id}
+                  className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden"
+                >
+                  {/* Product Image */}
+                  <div className="relative h-64 bg-gray-200">
+                    {product.images?.[0] ? (
+                      <img
+                        src={getImageUrl(product.images[0], 400, 300)}
+                        alt={product.images[0].alt || product.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                    )}
+                    
+                    {/* Category Badge */}
+                    {product.category && (
+                      <div className="absolute top-4 left-4">
+                        <span className="bg-white/90 backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-sm font-medium">
+                          {product.category.name}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Featured Badge */}
+                    {product.featured && (
+                      <div className="absolute top-4 right-4">
+                        <span className="bg-gradient-to-r from-blue-600 to-red-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                          Izdvojeno
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Product Info */}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                      {product.name}
+                    </h3>
+                    
+                    {product.shortDescription && (
+                      <p className="text-gray-600 mb-4 leading-relaxed">
+                        {product.shortDescription}
+                      </p>
+                    )}
+
+                    {/* Price */}
+                    {product.price && (
+                      <div className="mb-4">
+                        <span className="text-2xl font-bold text-blue-600">
+                          {product.price.amount} {product.price.currency}
+                        </span>
+                        {product.price.unit && (
+                          <span className="text-gray-500 ml-2">
+                            {product.price.unit}
+                          </span>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Stock Status */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <div className={`w-3 h-3 rounded-full mr-2 ${
+                          product.inStock ? 'bg-green-500' : 'bg-red-500'
+                        }`}></div>
+                        <span className={`text-sm font-medium ${
+                          product.inStock ? 'text-green-600' : 'text-red-600'
+                        }`}>
+                          {product.inStock ? 'Na stanju' : 'Nema na stanju'}
+                        </span>
+                      </div>
+
+                      <a href={`tel:${SITE_CONFIG.company.phone.replace(/\s/g, '')}`}>
+                        <Button size="sm" className="text-sm">
+                          Poruči
+                        </Button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            /* No Products Message */
+            <div className="text-center py-16">
               <div className="w-32 h-32 bg-gradient-to-r from-blue-600 to-red-600 rounded-full flex items-center justify-center mx-auto mb-8">
                 <svg className="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                 </svg>
               </div>
               
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">
-                Katalog proizvoda uskoro dostupan
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                {selectedCategory === 'all' ? 'Nema proizvoda' : 'Nema proizvoda u ovoj kategoriji'}
               </h2>
               
-              <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-                Radimo na pripremi kompletnog kataloga naših proizvoda. 
-                Uskoro ćete moći da pregledate celu ponudu profesionalne auto-hemije 
-                kroz naš online katalog upravljan preko Sanity CMS-a.
+              <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+                Proizvodi će biti prikazani čim ih dodamo u CMS. 
+                Za informacije o dostupnim proizvodima pozovite nas.
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                {productCategories.map((category, index) => (
-                  <div key={index} className={`p-8 bg-gradient-to-br ${category.bgColor} rounded-2xl hover:scale-105 transition-transform duration-300`}>
-                    <div className="text-gray-700 mb-4 flex justify-center">
-                      {category.icon}
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">{category.title}</h3>
-                    <p className="text-gray-600 leading-relaxed">{category.description}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href={`tel:${SITE_CONFIG.company.phone.replace(/\s/g, '')}`}>
                   <Button size="lg" className="w-full sm:w-auto">
                     <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -114,7 +243,7 @@ export default function ProizvodiPage() {
                 </a>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
