@@ -6,27 +6,65 @@ import Button from '../ui/Button';
 import { SITE_CONFIG } from '@/app/constants/site';
 import { client } from '@/sanity/lib/client';
 import { getImageUrl } from '@/sanity/lib/image';
-import { featuredProductsQuery } from '@/sanity/lib/queries';
 
 export default function FeaturedProductsSection() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalProducts, setTotalProducts] = useState(0);
+
+  const PRODUCTS_PER_PAGE = 6;
 
   useEffect(() => {
     async function fetchFeaturedProducts() {
       try {
-        const data = await client.fetch(featuredProductsQuery);
-        setProducts(data);
+        setLoading(true);
+        
+        const offset = (currentPage - 1) * PRODUCTS_PER_PAGE;
+        
+        const productsQuery = `*[_type == "product" && featured == true && inStock == true] | order(order asc) [${offset}...${offset + PRODUCTS_PER_PAGE}] {
+          _id,
+          name,
+          brand,
+          slug,
+          shortDescription,
+          category->{
+            _id,
+            name,
+            slug
+          },
+          images[] {
+            asset->{
+              _id,
+              url
+            },
+            alt
+          },
+          price
+        }`;
+
+        const countQuery = `count(*[_type == "product" && featured == true && inStock == true])`;
+
+        const [productsData, totalCount] = await Promise.all([
+          client.fetch(productsQuery),
+          client.fetch(countQuery)
+        ]);
+
+        setProducts(productsData);
+        setTotalProducts(totalCount);
       } catch (error) {
         console.error('Error fetching featured products:', error);
         setProducts([]);
+        setTotalProducts(0);
       } finally {
         setLoading(false);
       }
     }
 
     fetchFeaturedProducts();
-  }, []);
+  }, [currentPage]);
+
+  const totalPages = Math.ceil(totalProducts / PRODUCTS_PER_PAGE);
 
   if (loading) {
     return (
@@ -56,6 +94,13 @@ export default function FeaturedProductsSection() {
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Naši najpopularniji proizvodi za profesionalnu negu vozila
+          </p>
+        </div>
+
+        {/* Results Info */}
+        <div className="mb-8 text-center">
+          <p className="text-gray-600">
+            Prikazano {products.length} od {totalProducts} izdvojenih proizvoda
           </p>
         </div>
 
@@ -105,6 +150,13 @@ export default function FeaturedProductsSection() {
                   {product.name}
                 </h3>
                 
+                {/* Brand */}
+                {product.brand && (
+                  <p className="text-sm text-gray-500 mb-2">
+                    {product.brand}
+                  </p>
+                )}
+                
                 {product.shortDescription && (
                   <p className="text-gray-600 mb-4 leading-relaxed">
                     {product.shortDescription}
@@ -142,6 +194,76 @@ export default function FeaturedProductsSection() {
             </div>
           ))}
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="mt-16 flex justify-center">
+            <div className="flex items-center space-x-2">
+              {/* Previous Button */}
+              <button
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                  currentPage === 1
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600'
+                }`}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+
+              {/* Page Numbers */}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                const showPage = 
+                  page === 1 || 
+                  page === totalPages || 
+                  (page >= currentPage - 1 && page <= currentPage + 1);
+                
+                if (!showPage) {
+                  if (page === currentPage - 2 || page === currentPage + 2) {
+                    return (
+                      <span key={page} className="px-2 text-gray-400">
+                        ...
+                      </span>
+                    );
+                  }
+                  return null;
+                }
+
+                return (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                      currentPage === page
+                        ? 'bg-gradient-to-r from-blue-600 to-red-600 text-white shadow-lg'
+                        : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600'
+                    }`}
+                  >
+                    {page}
+                  </button>
+                );
+              })}
+
+              {/* Next Button */}
+              <button
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                  currentPage === totalPages
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-600 hover:text-blue-600'
+                }`}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* View All Products Link */}
         <div className="text-center mt-12">
