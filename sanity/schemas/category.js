@@ -15,6 +15,7 @@ export default {
       type: 'slug',
       options: {
         source: 'name'
+      }
       title: 'Opis kategorije',
       type: 'text',
       rows: 3

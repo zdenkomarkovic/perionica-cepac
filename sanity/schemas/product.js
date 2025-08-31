@@ -15,6 +15,7 @@ export default {
       type: 'slug',
       options: {
         source: 'name'
+      }
       title: 'Kategorija',
       type: 'reference',
       to: [{type: 'category'}],
