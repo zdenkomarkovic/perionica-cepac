@@ -214,6 +214,11 @@ export default function ProizvodiPage() {
                           Poruči
                         </Button>
                       </a>
+                      <a href={`/proizvodi/${product.slug?.current}`}>
+                        <Button variant="outline" size="sm" className="text-sm">
+                          Detalji
+                        </Button>
+                      </a>
                     </div>
                   </div>
                 </div>

@@ -126,11 +126,18 @@ export default function FeaturedProductsSection() {
                 )}
 
                 {/* Action Button */}
-                <a href={`tel:${SITE_CONFIG.company.phone.replace(/\s/g, '')}`}>
-                  <Button size="sm" className="w-full">
-                    Poruči sada
-                  </Button>
-                </a>
+                <div className="flex gap-2">
+                  <a href={`/proizvodi/${product.slug?.current}`} className="flex-1">
+                    <Button variant="outline" size="sm" className="w-full">
+                      Detalji
+                    </Button>
+                  </a>
+                  <a href={`tel:${SITE_CONFIG.company.phone.replace(/\s/g, '')}`} className="flex-1">
+                    <Button size="sm" className="w-full">
+                      Poruči
+                    </Button>
+                  </a>
+                </div>
               </div>
             </div>
           ))}
