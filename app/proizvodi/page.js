@@ -18,6 +18,7 @@ export default function ProizvodiPage() {
   const [loading, setLoading] = useState(true);
 
   const PRODUCTS_PER_PAGE = 9;
+  
   useEffect(() => {
     async function fetchData() {
       try {
@@ -112,7 +113,6 @@ export default function ProizvodiPage() {
   };
 
   const totalPages = Math.ceil(totalProducts / PRODUCTS_PER_PAGE);
-
 
   if (loading) {
     return (
@@ -277,27 +277,16 @@ export default function ProizvodiPage() {
                       </div>
                     )}
 
-                    {/* Stock Status */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <div className={`w-3 h-3 rounded-full mr-2 ${
-                          product.inStock ? 'bg-green-500' : 'bg-red-500'
-                        }`}></div>
-                        <span className={`text-sm font-medium ${
-                          product.inStock ? 'text-green-600' : 'text-red-600'
-                        }`}>
-                          {product.inStock ? 'Na stanju' : 'Nema na stanju'}
-                        </span>
-                      </div>
-
-                      <a href={`tel:${SITE_CONFIG.company.phone.replace(/\s/g, '')}`}>
-                        <Button size="sm" className="text-sm">
-                          Poruči
+                    {/* Action Buttons */}
+                    <div className="flex gap-2">
+                      <a href={`/proizvodi/${product.slug?.current}`} className="flex-1">
+                        <Button variant="outline" size="sm" className="w-full">
+                          Detalji
                         </Button>
                       </a>
-                      <a href={`/proizvodi/${product.slug?.current}`}>
-                        <Button variant="outline" size="sm" className="text-sm">
-                          Detalji
+                      <a href={`tel:${SITE_CONFIG.company.phone.replace(/\s/g, '')}`} className="flex-1">
+                        <Button size="sm" className="w-full">
+                          Poruči
                         </Button>
                       </a>
                     </div>
@@ -396,8 +385,6 @@ export default function ProizvodiPage() {
                     </button>
                   );
                 })}
-        </div>
-      </section>
 
                 {/* Next Button */}
                 <button
@@ -416,6 +403,9 @@ export default function ProizvodiPage() {
               </div>
             </div>
           )}
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
