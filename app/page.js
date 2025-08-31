@@ -1,5 +1,4 @@
 import HeroSection from './components/sections/HeroSection';
-import AboutSection from './components/sections/AboutSection';
 import ServicesSection from './components/sections/ServicesSection';
 import FeaturedProductsSection from './components/sections/FeaturedProductsSection';
 import CTASection from './components/sections/CTASection';
@@ -12,7 +11,6 @@ export default function HomePage() {
       <Header />
       <main>
         <HeroSection />
-        <AboutSection />
         <ServicesSection />
         <FeaturedProductsSection />
         <CTASection />

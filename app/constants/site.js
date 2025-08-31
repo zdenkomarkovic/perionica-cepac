@@ -18,6 +18,7 @@ export const SITE_CONFIG = {
   navigation: {
     main: [
       { name: 'Početna', href: '/' },
+      { name: 'O nama', href: '/o-nama' },
       { name: 'Proizvodi', href: '/proizvodi' },
       { name: 'Kontakt', href: '/kontakt' }
     ]
