@@ -150,6 +150,13 @@ export default function ProductPage() {
                 {product.name}
               </h1>
 
+              {/* Brand */}
+              {product.brand && (
+                <p className="text-lg text-gray-500 mb-6">
+                  Brend: <span className="font-medium text-gray-700">{product.brand}</span>
+                </p>
+              )}
+
               {/* Short Description */}
               {product.shortDescription && (
                 <p className="text-xl text-gray-600 mb-8 leading-relaxed">

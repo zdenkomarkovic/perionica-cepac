@@ -13,18 +13,17 @@ export default {
       name: 'slug',
       title: 'URL slug',
       type: 'slug',
+      validation: Rule => Rule.required(),
       options: {
         source: 'name',
-        maxLength: 96,
-        auto: true,
-        slugify: input => input
-          .toLowerCase()
-          .replace(/\s+/g, '-')
-          .replace(/[^\w\-]+/g, '')
-          .replace(/\-\-+/g, '-')
-          .replace(/^-+/, '')
-          .replace(/-+$/, '')
+        maxLength: 96
       }
+    },
+    {
+      name: 'brand',
+      title: 'Brend',
+      type: 'string',
+      description: 'Naziv brenda proizvoda'
     },
     {
       name: 'category',

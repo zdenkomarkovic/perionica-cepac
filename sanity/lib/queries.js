@@ -37,6 +37,7 @@ export const productsQuery = `
   *[_type == "product" && inStock == true] | order(order asc) {
     _id,
     name,
+    brand,
     slug,
     shortDescription,
     category->{
@@ -61,6 +62,7 @@ export const productsByCategoryQuery = `
   *[_type == "product" && category._ref == $categoryId && inStock == true] | order(order asc) {
     _id,
     name,
+    brand,
     slug,
     shortDescription,
     category->{
@@ -85,6 +87,7 @@ export const featuredProductsQuery = `
   *[_type == "product" && featured == true && inStock == true] | order(order asc) [0...6] {
     _id,
     name,
+    brand,
     slug,
     shortDescription,
     category->{
@@ -107,6 +110,7 @@ export const productBySlugQuery = `
   *[_type == "product" && slug.current == $slug][0] {
     _id,
     name,
+    brand,
     slug,
     shortDescription,
     description,
