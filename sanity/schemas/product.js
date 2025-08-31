@@ -16,6 +16,9 @@ export default {
       options: {
         source: 'name'
       }
+    },
+    {
+      name: 'category',
       title: 'Kategorija',
       type: 'reference',
       to: [{type: 'category'}],
@@ -143,29 +146,6 @@ export default {
         collapsible: true,
         collapsed: true
       }
-    }
-  ],
-  orderings: [
-    {
-      title: 'Redosled',
-      name: 'orderAsc',
-      by: [
-        {field: 'order', direction: 'asc'}
-      ]
-    },
-    {
-      title: 'Naziv A-Z',
-      name: 'nameAsc',
-      by: [
-        {field: 'name', direction: 'asc'}
-      ]
-    },
-    {
-      title: 'Kategorija',
-      name: 'categoryAsc',
-      by: [
-        {field: 'category.name', direction: 'asc'}
-      ]
     }
   ],
   preview: {

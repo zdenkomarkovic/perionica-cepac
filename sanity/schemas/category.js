@@ -16,6 +16,9 @@ export default {
       options: {
         source: 'name'
       }
+    },
+    {
+      name: 'description',
       title: 'Opis kategorije',
       type: 'text',
       rows: 3
@@ -46,22 +49,6 @@ export default {
       title: 'Aktivna kategorija',
       type: 'boolean',
       initialValue: true
-    }
-  ],
-  orderings: [
-    {
-      title: 'Redosled',
-      name: 'orderAsc',
-      by: [
-        {field: 'order', direction: 'asc'}
-      ]
-    },
-    {
-      title: 'Naziv A-Z',
-      name: 'nameAsc',
-      by: [
-        {field: 'name', direction: 'asc'}
-      ]
     }
   ],
   preview: {
