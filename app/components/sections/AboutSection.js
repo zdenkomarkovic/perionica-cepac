@@ -24,6 +24,18 @@ export default function AboutSection() {
                 Sada širimo ponudu i na prodaju <strong className="text-blue-600">profesionalne auto-hemije</strong> 
                 za sve ljubitelje čistih i negovanih automobila.
               </p>
+              <p>
+                Naša <strong className="text-blue-600">profesionalna auto-hemija</strong> uključuje 
+                kvalitetne šampone za pranje vozila, sredstva za poliranje karoserije, zaštitne voskove 
+                i detailing proizvode. Svi naši proizvodi su testirani i preporučeni od strane 
+                profesionalnih detailing majstora.
+              </p>
+              <p>
+                Bilo da tražite <strong className="text-gray-900">auto šampon za pranje</strong>, 
+                <strong className="text-gray-900">vosak za automobil</strong>, ili 
+                <strong className="text-gray-900">sredstva za čišćenje enterijera</strong>, 
+                imamo sve što vam je potrebno za održavanje vozila na profesionalnom nivou.
+              </p>
             </div>
             
             {/* Stats */}

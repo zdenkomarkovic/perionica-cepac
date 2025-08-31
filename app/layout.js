@@ -12,8 +12,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "RRcustomsserbia - Profesionalna Auto-hemija",
-  description: "Kvalitetna auto-hemija za pranje i održavanje vozila. Perionica Čepac - Zrenjanin",
+  title: "RRcustomsserbia - Profesionalna Auto-hemija | Šamponi, Voskovi, Detailing",
+  description: "Profesionalna auto-hemija u Zrenjaninu. Auto šamponi za pranje, voskovi za zaštitu, sredstva za poliranje i detailing proizvodi. Perionica Čepac - kvalitet i tradicija.",
 };
 
 export default function RootLayout({ children }) {

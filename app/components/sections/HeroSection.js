@@ -24,7 +24,7 @@ export default function HeroSection() {
               {SITE_CONFIG.name}
             </h1>
             <p className="text-xl md:text-2xl mb-8 leading-relaxed opacity-95">
-              Profesionalna auto-hemija za sve ljubitelje čistih i negovanih automobila
+              Profesionalna auto-hemija, šamponi za pranje, voskovi za zaštitu i detailing proizvodi za sve ljubitelje čistih i negovanih automobila u Zrenjaninu
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Link href="/proizvodi">
