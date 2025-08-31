@@ -15,14 +15,8 @@ export default {
       type: 'slug',
       options: {
         source: 'name',
-        maxLength: 96,
-        slugify: input => input
-                     .toLowerCase()
-                     .replace(/\s+/g, '-')
-                     .slice(0, 96)
-      },
-      readOnly: true,
-      hidden: true
+        maxLength: 96
+      }
     },
     {
       name: 'category',
