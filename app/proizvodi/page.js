@@ -103,32 +103,20 @@ export default function ProizvodiPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        // Pokušaj da učita iz Sanity-ja, ako ne uspe koristi mock podatke
-        try {
-          const [categoriesData, productsData] = await Promise.all([
-            client.fetch(categoriesQuery),
-            client.fetch(productsQuery)
-          ]);
-          
-          if (categoriesData.length > 0 || productsData.length > 0) {
-            setCategories(categoriesData);
-            setProducts(productsData);
-          } else {
-            // Koristi mock podatke ako nema podataka u Sanity
-            setCategories(mockCategories);
-            setProducts(mockProducts);
-          }
-        } catch (sanityError) {
-          // Ako Sanity nije konfigurisan, koristi mock podatke
-          console.log('Koriste se demo proizvodi - konfiguriši Sanity za prave podatke');
-          setCategories(mockCategories);
-          setProducts(mockProducts);
-        }
+        const [categoriesData, productsData] = await Promise.all([
+          client.fetch(categoriesQuery),
+          client.fetch(productsQuery)
+        ]);
+        
+        setCategories(categoriesData);
+        setProducts(productsData);
+        
+        console.log('Učitano kategorija:', categoriesData.length);
+        console.log('Učitano proizvoda:', productsData.length);
       } catch (error) {
         console.error('Error fetching data:', error);
-        // Fallback na mock podatke
-        setCategories(mockCategories);
-        setProducts(mockProducts);
+        setCategories([]);
+        setProducts([]);
       } finally {
         setLoading(false);
       }
