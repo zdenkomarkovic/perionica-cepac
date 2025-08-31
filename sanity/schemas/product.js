@@ -14,7 +14,15 @@ export default {
       title: 'URL slug',
       type: 'slug',
       options: {
-        source: 'name'
+        source: 'name',
+        maxLength: 96,
+        slugify: input => input
+          .toLowerCase()
+          .replace(/\s+/g, '-')
+          .replace(/[^\w\-]+/g, '')
+          .replace(/\-\-+/g, '-')
+          .replace(/^-+/, '')
+          .replace(/-+$/, '')
       }
     },
     {
