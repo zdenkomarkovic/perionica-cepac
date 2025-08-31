@@ -16,8 +16,10 @@ export default {
       options: {
         source: 'name',
         maxLength: 96,
+        auto: true,
       },
-      validation: Rule => Rule.required()
+      validation: Rule => Rule.required(),
+      hidden: true
     },
     {
       name: 'category',
@@ -105,47 +107,6 @@ export default {
           placeholder: 'npr. po komadu, po litru, po kg'
         }
       ]
-    },
-    {
-      name: 'specifications',
-      title: 'Specifikacije',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'label',
-              title: 'Naziv specifikacije',
-              type: 'string'
-            },
-            {
-              name: 'value',
-              title: 'Vrednost',
-              type: 'string'
-            }
-          ],
-          preview: {
-            select: {
-              title: 'label',
-              subtitle: 'value'
-            }
-          }
-        }
-      ]
-    },
-    {
-      name: 'features',
-      title: 'Karakteristike',
-      type: 'array',
-      of: [{type: 'string'}],
-      description: 'Ključne karakteristike proizvoda'
-    },
-    {
-      name: 'usage',
-      title: 'Način korišćenja',
-      type: 'text',
-      rows: 4
     },
     {
       name: 'inStock',
