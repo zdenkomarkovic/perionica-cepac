@@ -94,9 +94,22 @@ export default function Footer() {
             <p className="text-gray-400 text-sm">
               © {currentYear} {SITE_CONFIG.company.fullName}. Sva prava zadržana.
             </p>
-            <p className="text-gray-400 text-sm mt-4 md:mt-0">
-              Profesionalna auto-hemija • {SITE_CONFIG.company.location}
-            </p>
+            <div className="flex flex-col md:flex-row items-center gap-4 mt-4 md:mt-0">
+              <p className="text-gray-400 text-sm">
+                Profesionalna auto-hemija • {SITE_CONFIG.company.location}
+              </p>
+              <p className="text-gray-400 text-sm">
+                Izrada web sajta{' '}
+                <a 
+                  href="https://manikamwebsolutions.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:text-blue-300 transition-colors"
+                >
+                  ManikamWebSolutions
+                </a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
