@@ -16,10 +16,8 @@ export default {
       options: {
         source: 'name',
         maxLength: 96,
-        auto: true,
       },
-      validation: Rule => Rule.required(),
-      hidden: true
+      validation: Rule => Rule.required()
     },
     {
       name: 'category',
