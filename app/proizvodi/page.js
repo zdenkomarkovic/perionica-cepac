@@ -18,10 +18,17 @@ export default function ProizvodiPage() {
   useEffect(() => {
     async function fetchData() {
       try {
+        console.log('Pokušavam da učitam podatke...');
+        console.log('Project ID:', process.env.NEXT_PUBLIC_SANITY_PROJECT_ID);
+        console.log('Dataset:', process.env.NEXT_PUBLIC_SANITY_DATASET);
+        
         const [categoriesData, productsData] = await Promise.all([
           client.fetch(categoriesQuery),
           client.fetch(productsQuery)
         ]);
+        
+        console.log('Raw categories data:', categoriesData);
+        console.log('Raw products data:', productsData);
         
         setCategories(categoriesData);
         setProducts(productsData);
@@ -30,6 +37,7 @@ export default function ProizvodiPage() {
         console.log('Učitano proizvoda:', productsData.length);
       } catch (error) {
         console.error('Error fetching data:', error);
+        console.error('Error details:', error.message);
         setCategories([]);
         setProducts([]);
       } finally {
