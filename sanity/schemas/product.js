@@ -14,12 +14,7 @@ export default {
       title: 'URL slug',
       type: 'slug',
       options: {
-        source: 'name',
-        maxLength: 96
-      }
-    },
-    {
-      name: 'category',
+        source: 'name'
       title: 'Kategorija',
       type: 'reference',
       to: [{type: 'category'}],

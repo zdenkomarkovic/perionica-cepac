@@ -14,12 +14,7 @@ export default {
       title: 'URL slug',
       type: 'slug',
       options: {
-        source: 'name',
-        maxLength: 96
-      }
-    },
-    {
-      name: 'description',
+        source: 'name'
       title: 'Opis kategorije',
       type: 'text',
       rows: 3
