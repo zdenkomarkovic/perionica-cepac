@@ -9,6 +9,91 @@ import { client } from '@/sanity/lib/client';
 import { getImageUrl } from '@/sanity/lib/image';
 import { categoriesQuery, productsQuery } from '@/sanity/lib/queries';
 
+// Mock data za demonstraciju
+const mockCategories = [
+  {
+    _id: '1',
+    name: 'Šamponi',
+    slug: { current: 'samponi' },
+    description: 'Profesionalni šamponi za pranje vozila'
+  },
+  {
+    _id: '2', 
+    name: 'Voskovi',
+    slug: { current: 'voskovi' },
+    description: 'Zaštitni voskovi za dugotrajnu zaštitu'
+  },
+  {
+    _id: '3',
+    name: 'Poliranje',
+    slug: { current: 'poliranje' },
+    description: 'Sredstva za poliranje i sjaj'
+  }
+];
+
+const mockProducts = [
+  {
+    _id: '1',
+    name: 'Premium Car Shampoo',
+    shortDescription: 'Profesionalni šampon za bezbedno pranje svih tipova vozila',
+    category: { _id: '1', name: 'Šamponi' },
+    price: { amount: 1200, currency: 'RSD', unit: 'po litru' },
+    inStock: true,
+    featured: true,
+    images: null
+  },
+  {
+    _id: '2',
+    name: 'Ceramic Wax Pro',
+    shortDescription: 'Napredni keramički vosak za dugotrajnu zaštitu laka',
+    category: { _id: '2', name: 'Voskovi' },
+    price: { amount: 2500, currency: 'RSD', unit: 'po komadu' },
+    inStock: true,
+    featured: true,
+    images: null
+  },
+  {
+    _id: '3',
+    name: 'Polish & Shine',
+    shortDescription: 'Sredstvo za poliranje koje vraća originalni sjaj vozilu',
+    category: { _id: '3', name: 'Poliranje' },
+    price: { amount: 1800, currency: 'RSD', unit: 'po komadu' },
+    inStock: true,
+    featured: false,
+    images: null
+  },
+  {
+    _id: '4',
+    name: 'Glass Cleaner Pro',
+    shortDescription: 'Profesionalno sredstvo za čišćenje stakala bez tragova',
+    category: { _id: '1', name: 'Šamponi' },
+    price: { amount: 800, currency: 'RSD', unit: 'po komadu' },
+    inStock: false,
+    featured: false,
+    images: null
+  },
+  {
+    _id: '5',
+    name: 'Tire Shine Gel',
+    shortDescription: 'Gel za sjaj guma koji pruža dugotrajnu zaštitu',
+    category: { _id: '3', name: 'Poliranje' },
+    price: { amount: 1500, currency: 'RSD', unit: 'po komadu' },
+    inStock: true,
+    featured: false,
+    images: null
+  },
+  {
+    _id: '6',
+    name: 'Interior Cleaner',
+    shortDescription: 'Sveobuhvatno sredstvo za čišćenje enterijera vozila',
+    category: { _id: '1', name: 'Šamponi' },
+    price: { amount: 1000, currency: 'RSD', unit: 'po komadu' },
+    inStock: true,
+    featured: true,
+    images: null
+  }
+];
+
 export default function ProizvodiPage() {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
@@ -18,15 +103,32 @@ export default function ProizvodiPage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const [categoriesData, productsData] = await Promise.all([
-          client.fetch(categoriesQuery),
-          client.fetch(productsQuery)
-        ]);
-        
-        setCategories(categoriesData);
-        setProducts(productsData);
+        // Pokušaj da učita iz Sanity-ja, ako ne uspe koristi mock podatke
+        try {
+          const [categoriesData, productsData] = await Promise.all([
+            client.fetch(categoriesQuery),
+            client.fetch(productsQuery)
+          ]);
+          
+          if (categoriesData.length > 0 || productsData.length > 0) {
+            setCategories(categoriesData);
+            setProducts(productsData);
+          } else {
+            // Koristi mock podatke ako nema podataka u Sanity
+            setCategories(mockCategories);
+            setProducts(mockProducts);
+          }
+        } catch (sanityError) {
+          // Ako Sanity nije konfigurisan, koristi mock podatke
+          console.log('Koriste se demo proizvodi - konfiguriši Sanity za prave podatke');
+          setCategories(mockCategories);
+          setProducts(mockProducts);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
+        // Fallback na mock podatke
+        setCategories(mockCategories);
+        setProducts(mockProducts);
       } finally {
         setLoading(false);
       }
@@ -131,9 +233,9 @@ export default function ProizvodiPage() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center">
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-red-100">
                         <svg className="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                         </svg>
                       </div>
                     )}
@@ -216,12 +318,11 @@ export default function ProizvodiPage() {
               </div>
               
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                {selectedCategory === 'all' ? 'Nema proizvoda' : 'Nema proizvoda u ovoj kategoriji'}
+                Uskoro novi proizvodi
               </h2>
               
               <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-                Proizvodi će biti prikazani čim ih dodamo u CMS. 
-                Za informacije o dostupnim proizvodima pozovite nas.
+                Radimo na dodavanju novih proizvoda. Za informacije o trenutno dostupnim proizvodima pozovite nas.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
