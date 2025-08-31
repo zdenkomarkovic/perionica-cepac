@@ -113,42 +113,6 @@ export default {
       ]
     },
     {
-      name: 'features',
-      title: 'Karakteristike',
-      type: 'array',
-      of: [{type: 'string'}],
-      description: 'Lista glavnih karakteristika proizvoda'
-    },
-    {
-      name: 'specifications',
-      title: 'Specifikacije',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'name',
-              title: 'Naziv specifikacije',
-              type: 'string'
-            },
-            {
-              name: 'value',
-              title: 'Vrednost',
-              type: 'string'
-            }
-          ]
-        }
-      ]
-    },
-    {
-      name: 'usage',
-      title: 'Način korišćenja',
-      type: 'text',
-      rows: 4,
-      description: 'Instrukcije za korišćenje proizvoda'
-    },
-    {
       name: 'inStock',
       title: 'Na stanju',
       type: 'boolean',

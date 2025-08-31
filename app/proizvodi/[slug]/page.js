@@ -214,39 +214,6 @@ export default function ProductPage() {
                 </a>
               </div>
 
-              {/* Product Features */}
-              {product.features && product.features.length > 0 && (
-                <div className="mb-12">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Karakteristike</h3>
-                  <ul className="space-y-3">
-                    {product.features.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <svg className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span className="text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {/* Specifications */}
-              {product.specifications && product.specifications.length > 0 && (
-                <div className="mb-12">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6">Specifikacije</h3>
-                  <div className="bg-gray-50 rounded-xl p-6">
-                    <dl className="space-y-4">
-                      {product.specifications.map((spec, index) => (
-                        <div key={index} className="flex flex-col sm:flex-row sm:justify-between border-b border-gray-200 pb-4 last:border-b-0 last:pb-0">
-                          <dt className="font-medium text-gray-900 mb-1 sm:mb-0">{spec.name}</dt>
-                          <dd className="text-gray-600">{spec.value}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
 
@@ -261,18 +228,6 @@ export default function ProductPage() {
                     {product.shortDescription || 'Detaljan opis proizvoda će biti dostupan uskoro.'}
                   </p>
                 </div>
-              </div>
-            </div>
-          )}
-
-          {/* Usage Instructions */}
-          {product.usage && (
-            <div className="mt-16 max-w-4xl">
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">Način korišćenja</h2>
-              <div className="bg-blue-50 rounded-xl p-8">
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  {product.usage}
-                </p>
               </div>
             </div>
           )}

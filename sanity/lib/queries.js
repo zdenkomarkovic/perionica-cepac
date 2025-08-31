@@ -127,9 +127,6 @@ export const productBySlugQuery = `
       alt
     },
     price,
-    specifications,
-    features,
-    usage,
     inStock,
     seo
   }
