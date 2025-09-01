@@ -141,12 +141,6 @@ export default function ServicesSection() {
               </svg>
               Pozovite nas
             </a>
-            <a
-              href="/kontakt"
-              className="border-2 border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-semibold hover:border-blue-600 hover:text-blue-600 transition-colors inline-flex items-center justify-center"
-            >
-              Kontakt forma
-            </a>
           </div>
         </div>
       </div>

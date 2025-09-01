@@ -208,11 +208,11 @@ export default function ProizvodiPage() {
 
           {/* Products Grid */}
           {products.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
               {products.map((product) => (
                 <div
                   key={product._id}
-                  className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden"
+                  className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden flex flex-col h-full"
                 >
                   {/* Product Image */}
                   <div className="relative h-64 bg-gray-200">
@@ -241,45 +241,46 @@ export default function ProizvodiPage() {
                     )}
 
                     {/* Category Badge */}
-                    {product.category && (
+                    {/* {product.category && (
                       <div className="absolute top-4 left-4">
                         <span className="bg-white/90 backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-sm font-medium">
                           {product.category.name}
                         </span>
                       </div>
-                    )}
+                    )} */}
 
                     {/* Featured Badge */}
-                    {product.featured && (
+                    {/* {product.featured && (
                       <div className="absolute top-4 right-4">
                         <span className="bg-gradient-to-r from-blue-600 to-red-600 text-white px-3 py-1 rounded-full text-sm font-medium">
                           Izdvojeno
                         </span>
                       </div>
-                    )}
+                    )} */}
                   </div>
 
                   {/* Product Info */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">
-                      {product.name}
-                    </h3>
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="">
+                      <h3 className="text-xl font-bold text-gray-900 mb-3">
+                        {product.name}
+                      </h3>
 
-                    {/* Brand */}
-                    {product.brand && (
-                      <p className="text-sm text-gray-500 mb-2">
-                        {product.brand}
-                      </p>
-                    )}
+                      {/* Brand */}
+                      {product.brand && (
+                        <p className="text-sm text-gray-500 mb-2">
+                          {product.brand}
+                        </p>
+                      )}
 
-                    {product.shortDescription && (
-                      <p className="text-gray-600 mb-4 leading-relaxed">
-                        {product.shortDescription}
-                      </p>
-                    )}
-
+                      {product.shortDescription && (
+                        <p className="text-gray-600 mb-4 leading-relaxed">
+                          {product.shortDescription}
+                        </p>
+                      )}
+                    </div>
                     {/* Price */}
-                    {product.price && (
+                    {/* {product.price && (
                       <div className="mb-4">
                         <span className="text-2xl font-bold text-blue-600">
                           {product.price.amount} {product.price.currency}
@@ -290,24 +291,16 @@ export default function ProizvodiPage() {
                           </span>
                         )}
                       </div>
-                    )}
+                    )} */}
 
                     {/* Action Buttons */}
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 mt-auto">
                       <a
                         href={`/proizvodi/${product.slug?.current}`}
                         className="flex-1"
                       >
-                        <Button variant="outline" size="sm" className="w-full">
-                          Detalji
-                        </Button>
-                      </a>
-                      <a
-                        href={`tel:${SITE_CONFIG.company.phone.replace(/\s/g, "")}`}
-                        className="flex-1"
-                      >
-                        <Button size="sm" className="w-full">
-                          Poruči
+                        <Button size="sm" className="w-full ">
+                          Vidi više...
                         </Button>
                       </a>
                     </div>

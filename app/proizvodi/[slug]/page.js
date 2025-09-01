@@ -106,12 +106,12 @@ export default function ProductPage() {
             <div>
               {/* Main Image */}
               <div className="relative mb-6">
-                <div className="aspect-square bg-gray-200 rounded-2xl overflow-hidden">
+                <div className="aspect-square bg-[#f9fafb] rounded-2xl overflow-hidden flex items-center justify-center">
                   {product.images?.[selectedImage] ? (
                     <img
-                      src={getImageUrl(product.images[selectedImage], 600, 600)}
+                      src={getImageUrl(product.images[selectedImage], 2000)}
                       alt={product.images[selectedImage].alt || product.name}
-                      className="w-full h-full object-cover"
+                      className="object-contain max-w-full max-h-full"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-red-100">
@@ -253,7 +253,7 @@ export default function ProductPage() {
                       : "Kontaktiraj za dostupnost"}
                   </Button>
                 </a>
-                <a
+                {/* <a
                   href={`mailto:${SITE_CONFIG.company.email}?subject=Upit za ${product.name}`}
                 >
                   <Button
@@ -276,7 +276,7 @@ export default function ProductPage() {
                     </svg>
                     Pošalji email
                   </Button>
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
