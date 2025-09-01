@@ -139,9 +139,9 @@ export default function ProizvodiPage() {
           <img
             src="https://images.pexels.com/photos/13065690/pexels-photo-13065690.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
             alt="Auto-hemija proizvodi"
-            className="w-full h-full object-cover opacity-20"
+            className="w-full h-full object-cover opacity-30"
           />
-          <div className="absolute inset-0 "></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/90 to-red-600/90"></div>
         </div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
